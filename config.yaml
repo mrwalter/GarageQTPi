@@ -2,25 +2,26 @@ logging:
     log_level: INFO
     show_timestamp: true
 mqtt:
-    host: mqtt.thegrays.duckdns.org
+    host: 192.168.7.72
     port: 1883
     user: "" 
     password: "" 
-    discovery: true #defaults to false, uncomment to enable home-assistant discovery
-    discovery_prefix: homeassistant #change to match with setting of home-assistant
-    availability_topic: home-assistant/cover/availabilty
+    #discovery: true #defaults to false, uncomment to enable home-assistant discovery
+    #discovery_prefix: homeassistant #change to match with setting of home-assistant
+    availability_topic: garage-pi/garage-door/availabilty
     payload_available: online
     payload_not_available: offline
 
 doors:
     -
         id:  'garage_door'
-        name: #garage_door
-        relay: 21 
-        state: 12
-        open: 7
+        name: 'Garage Door'
+        relay: 23 
+        state: 17
+        #open: 7
+        #state_mode: normally_open
         state_mode: normally_closed #defaults to normally open, uncomment to switch
-#        invert_relay: true #defaults to false, uncomment to turn relay pin on by default
-        state_topic: "home-assistant/cover"
-        command_topic: "home-assistant/cover/set"
+        invert_relay: true #defaults to false, uncomment to turn relay pin on by default
+        state_topic: "garage-pi/garage-door/state"
+        command_topic: "garage-pi/garage-door/set"
 

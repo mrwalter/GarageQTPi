@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from .eventhook import EventHook
 
 
-SHORT_WAIT = .2  # S (200ms)
+SHORT_WAIT = 0.2  # S (200ms)
 """
     The purpose of this class is to map the idea of a garage door to the pinouts on
     the raspberrypi. It provides methods to control the garage door and also provides
@@ -49,11 +49,11 @@ class GarageDoor(object):
     # changes or do things differently depending on the intended action
 
     def open(self):
-        if self.state == 'closed':
+        if self.state == 'Closed':
             self.__press()
 
     def close(self):
-        if self.state == 'open':
+        if self.state == 'Open':
             self.__press()
 
     def stop(self):
@@ -66,9 +66,9 @@ class GarageDoor(object):
         # and vice versa for normally open
         state = GPIO.input(self.state_pin)
         if state == self.mode:
-            return 'closed'
+            return 'Closed'
         else:
-            return 'open'
+            return 'Open'
 
     # Mimick a button press by switching the GPIO pin on and off quickly
     def __press(self):
@@ -118,13 +118,13 @@ class TwoSwitchGarageDoor(GarageDoor):
             self.state_pin) == self.mode else False
         open_state = True if GPIO.input(self.open_pin) == self.mode else False
         if closed_state:
-            self._state = 'closed'
+            self._state = 'Closed'
         elif open_state:
-            self._state = 'open'
-        elif self._state == 'closed':
-            self._state = 'opening'
-        elif self._state == 'open':
-            self._state = 'closing'
+            self._state = 'Open'
+        elif self._state == 'Closed':
+            self._state = 'Opening'
+        elif self._state == 'Open':
+            self._state = 'Closing'
         return self._state
 
         # Provide an event for when the state pin changes

@@ -66,14 +66,16 @@ def execute_command(door, command):
     except BaseException:
         doorName = door.id
     logging.info("Executing command %s for door %s" % (command, doorName))
-    if command == "OPEN" and door.state == 'closed':
+    if command == "open" and door.state == 'Closed':
+        print('Commanded to OPEN when closed')
         door.open()
-    elif command == "CLOSE" and door.state == 'open':
+    elif command == "close" and door.state == 'Open':
+        print('Commanded to CLOSE when open')
         door.close()
-    elif command == "STOP":
+    elif command == "stop": # NOT SUPPORTED
         door.stop()
     else:
-        logging.info("Invalid command: %s" % command)
+        logging.info("Invalid command: %s for state: %s" % (command, door.state))
 
 
 
