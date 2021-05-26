@@ -18,7 +18,7 @@ doors:
         name: 'Garage Door'
         relay: 23 
         state: 17
-        #open: 7
+        open: 27
         #state_mode: normally_open
         state_mode: normally_closed #defaults to normally open, uncomment to switch
         invert_relay: true #defaults to false, uncomment to turn relay pin on by default
