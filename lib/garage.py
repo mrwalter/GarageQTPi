@@ -114,6 +114,8 @@ class TwoSwitchGarageDoor(GarageDoor):
     def state(self):
         # Read the mode from the config. Then compare the mode to the current state. IE. If the circuit is normally closed and the state is 1 then the circuit is closed.
         # and vice versa for normally open
+        print('GPIO.input(self.state_pin) = %d' % GPIO.input(self.state_pin))
+        print('GPIO.input(self.open_pin) = %d' % GPIO.input(self.open_pin))
         closed_state = True if GPIO.input(
             self.state_pin) == self.mode else False
         open_state = True if GPIO.input(self.open_pin) == self.mode else False
@@ -125,11 +127,14 @@ class TwoSwitchGarageDoor(GarageDoor):
             self._state = 'Opening'
         elif self._state == 'Open':
             self._state = 'Closing'
+
+        print('Returning state: %s' % self._state)
         return self._state
 
         # Provide an event for when the state pin changes
     def __stateChanged(self, channel):
         if channel == self.state_pin or channel == self.open_pin:
+            print('__stateChanged for channel %d' % channel)
             # Had some issues getting an accurate value so we are going to wait for a short timeout
             # after a statechange and then grab the state
             time.sleep(SHORT_WAIT)
