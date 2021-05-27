@@ -25,6 +25,10 @@ class GarageDoor(object):
 
         # Setup
         self._state = None
+
+        # Read the current state
+        self.state()
+        
         self.onStateChange = EventHook()
 
         # Set relay pin to output, state pin to input, and add a change

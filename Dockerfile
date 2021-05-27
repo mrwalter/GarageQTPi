@@ -1,10 +1,20 @@
 # Python Base Image from https://hub.docker.com/r/arm32v7/python/
 FROM arm32v7/python:3.8.1-buster
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-COPY ./requirements.txt .
+# set the working directory in the container
+WORKDIR /code
+
+# copy the dependencies file to the working directory
+COPY requirements.txt .
+
+# install dependencies
 RUN pip install -r requirements.txt
-# ENV PYTHONUNBUFFERED 1 <- was in example but don't think I need
+
+# copy the content of the local src directory to the working directory
 COPY . .
-CMD python3 main.py
+
+# prevent buffering
+ENV PYTHONUNBUFFERED=1
+
+# command to run on container start
+ENTRYPOINT [ "python3", "main.py" ]
